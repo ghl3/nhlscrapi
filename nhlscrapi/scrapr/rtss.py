@@ -124,8 +124,11 @@ class PlayParser(object):
         p['strength'] = self.__strength(d[c["str"]].text)
         
         time = d[c["time"]].text.split(":")
-        p['time'] = { "min": int(time[0]), "sec": int(time[1]) }
-        
+        try:
+            p['time'] = { "min": int(time[0]), "sec": int(time[1]) }
+        except Exception as e:
+            p['time'] = None
+
         skater_tab = d[c["vis"]].xpath("./table")
         p['vis_on_ice'] = self.__skaters(skater_tab[0][0]) if len(skater_tab) else { }
             
